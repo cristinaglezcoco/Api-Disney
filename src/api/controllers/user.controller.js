@@ -3,6 +3,16 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
 const { generateSign } = require('../../utils/jwt');
 
+
+const getUser = async (req, res) => {
+    try {
+        const getUsers = await User.find();
+        return res.status(200).json(getUsers);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}
+
 const login = async (req, res) => {
     try {
         const getUser = await User.findOne({email: req.body.email});
@@ -50,4 +60,4 @@ const checkSession = async (req, res) => {
     }
 }
 
-module.exports = {login, register, checkSession}
+module.exports = {login, register, checkSession, getUser}
